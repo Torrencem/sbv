@@ -968,7 +968,7 @@ cvtExp caps rm skolemMap tableMap functionMap expr@(SBVApp _ arguments) = sh exp
         sh (SBVApp (OverflowOp op) args) = "(not (" ++ show op ++ " " ++ unwords (map ssv args) ++ "))"
 
         -- Note the unfortunate reversal in StrInRe..
-        sh (SBVApp (StrOp (StrInRe r)) args) = "(str.in.re " ++ unwords (map ssv args) ++ " " ++ regExpToSMTString r ++ ")"
+        sh (SBVApp (StrOp (StrInRe r)) args) = "(str.in_re " ++ unwords (map ssv args) ++ " " ++ regExpToSMTString r ++ ")"
         -- StrUnit is no-op, since a character in SMTLib is the same as a string
         sh (SBVApp (StrOp StrUnit)     [a])  = ssv a
         sh (SBVApp (StrOp op)          args) = "(" ++ show op ++ " " ++ unwords (map ssv args) ++ ")"
