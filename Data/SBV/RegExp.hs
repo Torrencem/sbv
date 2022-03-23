@@ -120,6 +120,7 @@ instance RegExpMatchable SString where
            go (Union [x])    k s      = go x k s
            go (Union (x:xs)) k s      = go x k s || go (Union xs) k s
            go (Inter a b)    k s      = go a k s && go b k s
+           go (UserDefined _) _ _     = error "uninterpreted user defined regex"
 
            -- In the KStar case, make sure the continuation is called with something
            -- smaller to avoid infinite recursion!

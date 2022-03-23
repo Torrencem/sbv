@@ -364,6 +364,7 @@ data RegExp = Literal String       -- ^ Precisely match the given string
             | Power Int     RegExp -- ^ Exactly @n@ repetitions, i.e., nth power
             | Union [RegExp]       -- ^ Union of regular expressions
             | Inter RegExp RegExp  -- ^ Intersection of regular expressions
+            | UserDefined String   -- ^ Meant for internal use only. A name that is uninterpreted, similar to KUserSort
             deriving (Eq, Ord, G.Data)
 
 -- | With overloaded strings, we can have direct literal regular expressions.
@@ -430,6 +431,7 @@ regExpToString fs (Inter r1 r2)     = "(re.inter " ++ regExpToString fs r1 ++ " 
 regExpToString _  (Union [])        = "re.nostr"
 regExpToString fs (Union [x])       = regExpToString fs x
 regExpToString fs (Union xs)        = "(re.union " ++ unwords (map (regExpToString fs) xs) ++ ")"
+regExpToString _  (UserDefined s)   = s
 
 -- | Show instance for @StrOp@. Note that the mapping here is important to match the SMTLib equivalents.
 instance Show StrOp where
