@@ -407,7 +407,7 @@ regExpToSMTString = regExpToString (\s -> '"' : stringToQFS s ++ "\"")
 
 -- | Convert a RegExp to a string, parameterized by how strings are converted
 regExpToString :: (String -> String) -> RegExp -> String
-regExpToString fs (Literal s)       = "(str.to.re " ++ fs s ++ ")"
+regExpToString fs (Literal s)       = "(str.to_re " ++ fs s ++ ")"
 regExpToString _  All               = "re.all"
 regExpToString _  AllChar           = "re.allchar"
 regExpToString _  None              = "re.nostr"
@@ -448,7 +448,7 @@ instance Show StrOp where
   show StrToCode   = "str.to_code"
   show StrFromCode = "str.from_code"
   -- Note the breakage here with respect to argument order. We fix this explicitly later.
-  show (StrInRe s) = "str.in.re " ++ regExpToSMTString s
+  show (StrInRe s) = "str.in_re " ++ regExpToSMTString s
 
 -- | Show instance for @RegExOp@.
 instance Show RegExOp where
